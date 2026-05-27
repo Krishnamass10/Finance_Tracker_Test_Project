@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        Finance Dashboard
+    </h2>
+
+    <!-- Summary Cards -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card bg-success text-white summary-card">
+
+                <div class="card-body">
+
+                    <h5>Total Income</h5>
+
+                    <h3>₹ {{ income }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card bg-success text-white summary-card">
+
+                <div class="card-body">
+
+                    <h5>Total Expense</h5>
+
+                    <h3>₹ {{ expense }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card bg-success text-white summary-card">
+
+                <div class="card-body">
+
+                    <h5>Balance</h5>
+
+                    <h3>₹ {{ balance }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Charts -->
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+                    Expense Categories
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="expenseChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card">
+
+                <div class="card-header">
+                    Recent Transactions
+                </div>
+
+                <div class="card-body">
+
+                    <ul class="list-group">
+
+                        {% for transaction in recent_transactions %}
+
+                        <li class="list-group-item d-flex justify-content-between">
+
+                            <div>
+
+                                <strong>
+                                    {{ transaction.category }}
+                                </strong>
+
+                                <br>
+
+                                <small>
+                                    {{ transaction.description }}
+                                </small>
+
+                            </div>
+
+                            <span>
+
+                               {% if transaction.transaction_type == 'income' %}
+
+                                <span class="text-success fw-bold">
+                                    + ₹ {{ transaction.amount }}
+                                </span>
+
+                                {% else %}
+
+                                <span class="text-danger fw-bold">
+                                     - ₹ {{ transaction.amount }}
+                                </span>
+
+                                {% endif %}
+
+                            </span>
+
+                        </li>
+
+                        {% empty %}
+
+                        <li class="list-group-item">
+                            No transactions found
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Chart JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const expenseData = {
+
+        labels: [
+            {% for item in expense_categories %}
+                '{{ item.category }}',
+            {% endfor %}
+        ],
+
+        datasets: [{
+            label: 'Expenses',
+
+            data: [
+                {% for item in expense_categories %}
+                    {{ item.total }},
+                {% endfor %}
+            ],
+
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF9F40'
+            ],
+        }]
+    };
+
+    const config = {
+        type: 'pie',
+        data: expenseData,
+    };
+
+    new Chart(
+        document.getElementById('expenseChart'),
+        config
+    );
+
+</script>
+
+{% endblock %}

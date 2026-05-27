@@ -1,0 +1,83 @@
+/* Global */
+
+body {
+    background-color: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+
+.navbar {
+    padding: 15px 30px;
+}
+
+/* Cards */
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.card-body h3 {
+    font-weight: bold;
+}
+
+/* Tables */
+
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Buttons */
+
+.btn {
+    border-radius: 8px;
+}
+
+/* Forms */
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+}
+
+/* Chatbot */
+
+#chat-box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+/* Footer */
+
+.footer {
+    margin-top: 50px;
+    padding: 20px;
+    text-align: center;
+    background: #212529;
+    color: white;
+}
+
+/* Dashboard Cards */
+
+.summary-card {
+    transition: transform 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .navbar .btn {
+        margin-top: 10px;
+    }
+
+}

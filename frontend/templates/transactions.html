@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2>Transactions</h2>
+
+        <a href="{% url 'add_transaction' %}"
+           class="btn btn-primary">
+
+            + Add Transaction
+
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for transaction in transactions %}
+
+            <tr>
+
+                <td>
+                    {{ transaction.transaction_type }}
+                </td>
+
+                <td>
+                    {{ transaction.category }}
+                </td>
+
+                <td>
+                    {% if transaction.transaction_type == 'income' %}
+
+                    <span class="text-success fw-bold">
+                        + ₹ {{ transaction.amount }}
+                    </span>
+
+                    {% else %}
+
+                    <span class="text-danger fw-bold">
+                         - ₹ {{ transaction.amount }}
+                    </span>
+
+                    {% endif %}
+                </td>
+
+                <td>
+                    {{ transaction.date }}
+                </td>
+
+                <td>
+                    {{ transaction.description }}
+                </td>
+
+                <td>
+
+                    <a href="{% url 'edit_transaction' transaction.id %}"
+                       class="btn btn-warning btn-sm">
+
+                        Edit
+
+                    </a>
+
+                    <a href="{% url 'delete_transaction' transaction.id %}"
+                       class="btn btn-danger btn-sm">
+
+                        Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+                    No transactions found
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
